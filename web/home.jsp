@@ -1,6 +1,6 @@
 <%@page import="java.io.PrintWriter"%>
 <%@page import="java.sql.*;"%>
-<jsp:useBean id="tdvldt" scope="page" class="threeT.temper" />
+<jsp:useBean id="tdvldt" scope="page" class="threeT.DatabaseConnect" />
 <jsp:setProperty name="tdvldt"  property="*"/>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>

@@ -1,7 +1,8 @@
+<%@page import="threeT.Extractdata"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="java.io.PrintWriter"%>
 <%@page import="java.sql.*;"%>
-<jsp:useBean id="tvldt" scope="page" class="threeT.temper" />
+<jsp:useBean id="tvldt" scope="page" class="threeT.UpdateDatabase" />
 <jsp:setProperty name="tvldt"  property="*"/>
 <!DOCTYPE html>
 <html style = "background-color:lavender">
@@ -35,59 +36,53 @@ font-size: 35px;">Patient's Name : <%=request.getParameter("pname")%></h2>
 </td>
 <td>
 <div>
-            <%
-       if(request.getParameter("reg").toLowerCase().trim().equals("region1"))
-       {
-           %>
-           <img src = "img/p1photo.jpg" width="250px" height = "250px" alt="vikram"> 
-           <%
-       }
-       else{
-           %>
-           <img src = "img/p1photo.jpg" width="250px" height = "250px" alt="jadon"> 
-           <%
-       }
-            %>
-        </div>
-            </td>
+       <%
+       Extractdata ed = new Extractdata();
+       ed.ConnectDatabase();
+       System.out.println("In PatientInfo!!");
+       double temp = ed.gettemp(request.getParameter("pid").trim(), request.getParameter("reg").trim());
+       double hb = ed.gethb(request.getParameter("pid").trim(), request.getParameter("reg").trim());
+       String pph = ed.getpphoto(request.getParameter("pid").trim(), request.getParameter("reg").trim());
+       String ecgph = ed.getecgphoto(request.getParameter("pid").trim(), request.getParameter("reg").trim());
+       pph = pph.trim();
+       ecgph = ecgph.trim();
+       ed.CloseConnection();
+       System.out.println(temp + " " + hb + " " + pph + " " + ecgph);
+       //out.println("<img src = \"img/"+pph+"\" width = \"250px\" height = \"250px\" alt=\"patient's photo\"");
+       //out.println("<table border=1><tr><td>Anuj</tr></td></table>");
+       out.println("<img src = \""+pph+"\" width = \"250px\" height = \"250px\" alt = \"Patient's Photo\">");
+       //System.out.println("<img src = \"img/"+pph+"\" width = \"250px\" height = \"250px\" alt = \"Patient's Photo\">");
+       %>
+</div> 
+</td>
             </tr>
             <tr>
-                <td style = "font-family: cursive;
-font-size: 37px;">Patient's ECG : </td>
-                 <td>
-                <%
-            if(request.getParameter("reg").toLowerCase().trim().equals("region1"))
-       {
-           %>
-           <img src = "img/p1ecg.jpg" width="250px" height = "250px" alt="vikram"> 
-           <%
-       }
-       else{
-           %>
-           <img src = "img/p1ecg.jpg" width="250px" height = "250px" alt="jadon"> 
-           <%
-       }
-                %>
-                 </td>
+                <td>
+                    <h2 style="
+    font-family: cursive;
+    font-size: 38px;
+    margin-left: 131px;
+">Patient's Temperature : <%out.println(temp);%></h2>
+<h2 style="
+    font-family: cursive;
+    font-size: 38px;
+    margin-left: 131px;
+">Patient's Heart Rate : <%out.println(hb);%></h2>
+                </td>
+                <td>
+                    <%out.println("<img src = \""+ecgph+"\" width = \"250px\" height = \"250px\" alt = \"Patient's ECG\">");%>
+                </td>
             </tr>
-            <tr>
-                <td style = "font-family: cursive;
-font-size: 41px;">Patient's Temperature :            <%= tvldt.gettemp(request.getParameter("reg").trim(), request.getParameter("pid").trim())%> F<td>
-                </tr>
-                <tr>
-                <td style = "font-family: cursive;
-font-size: 41px;">Patient's HeartRate :            <%= tvldt.gethb(request.getParameter("reg").trim(), request.getParameter("pid").trim())%> /s<td>
-                </tr>
         </table>
-        </div>
+    </div>
         <h1 style = "font-family: cursive;
 font-size: 29px;">Send Prescription Details</h1>
         <form name="f1" method="post" action="sentmsg.jsp">
             <table>
                 <tr>
-                    <td style = "font-family: cursive;">Enter Details</td>
-                    <td><input style ="width: 285px;
-height: 100px;" type="text" name = "msg" /></td>
+                    <td style = "font-family: cursive;">Enter Details       </td>
+                    <td><textarea name = "mes" rows="5" cols="50" type="text" style=" font-family: cursive;  font-size: smaller; border-radius: 7px;
+    "></textarea></td>
                 </tr>
                 <tr>
                     <td>&nbsp;</td>

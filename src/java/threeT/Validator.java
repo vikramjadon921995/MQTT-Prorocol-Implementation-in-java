@@ -1,4 +1,5 @@
 package threeT;
+import java.lang.*;
 
 //code it as a java bean
 //rule 1 : It must have a public parameterless constructor
@@ -6,7 +7,7 @@ package threeT;
 //rule 3 : The member variable must be carefully exposed using getter/setter methods as per design rules.
 //rule 4 : Host/Access processing methods
 
-public class Validator
+public class Validator implements Runnable 
 {
     private String uid, pass;
 
@@ -46,8 +47,15 @@ public class Validator
     {
         System.out.println("In vali");
         //use the backend
+       // Thread t = new Thread();
+        //t.start();
         new DatabseSubscriber(); 
         DatabaseConnect smg = new DatabaseConnect();
         return pass.equals(smg.getPassword(uid));
+    }
+    public void run()
+    {
+        System.out.println("Ready for Subscribing!!");
+        new DatabseSubscriber(); 
     }
 }

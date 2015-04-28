@@ -27,7 +27,7 @@ public class DoctorPublish
     {//setter
         System.out.println("in setMes : " + s); 
         //pass= encrypt(s); 
-        mes = s;
+        mes = s.toLowerCase();
     }
     
     public String getMes()
@@ -40,10 +40,10 @@ public class DoctorPublish
     try {
          MqttClient client;
         System.out.println("In doDemo()");
-      client = new MqttClient("tcp://192.168.0.103:1887", "pahomqttpublish3");
+      client = new MqttClient("tcp://192.168.0.103:1886", "DoctorPublish");
       client.connect();
       System.out.println("connected");
-      System.out.println("message : "+mes);
+      System.out.println("message : " + mes);
       System.out.println("topic : " + reg);
       MqttMessage message = new MqttMessage();
       message.setPayload(mes.getBytes());
