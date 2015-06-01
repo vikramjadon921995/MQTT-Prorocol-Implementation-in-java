@@ -12,7 +12,6 @@ public class DatabaseConnect
     public String getPassword(String uid)
     {
         String JDBC_DRIVER = "com.mysql.jdbc.Driver";
-       //String DB_URL = "jdbc:mysql://localhost:3306/broker";
        String DB_URL = "jdbc:derby://localhost:1527/broker";
        String USER = "root";
        String PASS = "vikramjadon95";
